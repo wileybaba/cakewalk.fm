@@ -6,6 +6,7 @@ export const flamingoTheme = {
   heroGradient:
     "linear-gradient(to right, #00bedb 0%, #11E0FF 15%, #f8f8ff 100%)",
   colors: {
+    primary: "whitesmoke",
     secondary: "#00bedb",
   },
 };
@@ -17,6 +18,7 @@ export const spaceTheme = {
   heroGradient:
     "linear-gradient(90deg, #ff9a8b 0%, #ff6a88 25%, #ff99ac 45%, #f8f8ff 100%)",
   colors: {
+    primary: "whitesmoke",
     secondary: "#ff9a8b",
   },
 };
@@ -28,6 +30,7 @@ export const siestaTheme = {
   heroGradient:
     "linear-gradient(to right, #F2FE00 0%, #FF87F9 15%, #f8f8ff 100%)",
   colors: {
+    primary: "whitesmoke",
     secondary: "#FF87F9",
   },
 };
@@ -38,7 +41,8 @@ export const deepBlueTheme = {
   heroGradient:
     "linear-gradient(to right, #FCAC25 0%, #25fc41 35%, #f8f8ff 100%)",
   colors: {
-    secondary: "#25fc41",
+    primary: "whitesmoke",
+    secondary: "#00d41c",
   },
 };
 
@@ -48,7 +52,7 @@ export const springTheme = {
   heroGradient:
     "linear-gradient(to right, #FFCDAB 0%, #F7ABFF 25%, #2c3e50 100%)",
   colors: {
-    primary: "#363636",
+    primary: "#2c3e50",
     secondary: "#F7ABFF",
   },
 };

@@ -1,9 +1,4 @@
-import React, { 
-  createContext, 
-  useState, 
-  useContext, 
-  useEffect
-} from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import fakeAuth from "fake-auth";
 
 const AuthContext = createContext(null);
@@ -20,14 +15,12 @@ export const useAuthContext = () => {
 };
 
 export const AuthContextProvider = ({ children }) => {
+  const currentUser = fakeAuth.getCurrentUser().then((user) => user);
 
-  const currentUser = fakeAuth.getCurrentUser().then(user => user);
-  
   const [user, setUser] = useState(currentUser);
 
   useEffect(() => {
-    fakeAuth.getCurrentUser()
-      .then(user => setUser(user));
+    fakeAuth.getCurrentUser().then((user) => setUser(user));
   }, []);
 
   return (
@@ -35,6 +28,4 @@ export const AuthContextProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-
-
 };

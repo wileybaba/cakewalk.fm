@@ -23,9 +23,8 @@ export function SignIn() {
         if (user?.location && user?.aqi) {
           history.push("/home");
         } else {
-          history.push("/preferences"); 
+          history.push("/preferences");
         }
-        
       })
       .catch((error) => {
         setError(error);
@@ -37,17 +36,17 @@ export function SignIn() {
       <h3>Sign In</h3>
       <form onSubmit={handleSubmit(handleLogin)}>
         {error && <p className="error">{error.message}</p>}
-        <input 
-          type="username" 
-          name="username" 
-          placeholder="Username" 
-          {...register("username")} 
+        <input
+          type="username"
+          name="username"
+          placeholder="Username"
+          {...register("username")}
         />
-        <input 
-          type="password" 
-          name="password" 
-          placeholder="Password" 
-          {...register("Password")} 
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          {...register("Password")}
         />
         <button type="submit">Sign In</button>
         <Link to="signup">Need an account? Click here to sign up.</Link>

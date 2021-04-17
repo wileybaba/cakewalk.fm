@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useAuthContext } from "./AuthProvider";
 import { useAqi } from "./useAqi";
 import fakeAuth from "fake-auth";
+import { useTheme } from "./hooks/useTheme";
 
 export function Home() {
   const { user } = useAuthContext();
