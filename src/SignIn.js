@@ -3,6 +3,8 @@ import fakeAuth from "fake-auth";
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 import { useAuthContext } from "./AuthProvider";
+import { Modal } from "./components/Modal";
+import { StyledForm } from "./components/StyledComponents";
 
 export function SignIn() {
   const [error, setError] = useState();
@@ -32,25 +34,38 @@ export function SignIn() {
   };
 
   return (
-    <>
-      <h3>Sign In</h3>
-      <form onSubmit={handleSubmit(handleLogin)}>
+    <Modal cleanup={() => history.push("/")}>
+      <span style={{ fontSize: "3em" }}>🍱 Its lunchtime.</span>
+      <p>Lets get you logged in.</p>
+      <StyledForm
+        onSubmit={handleSubmit(handleLogin)}
+        style={{ marginBottom: "1.5rem" }}
+      >
         {error && <p className="error">{error.message}</p>}
-        <input
-          type="username"
-          name="username"
-          placeholder="Username"
-          {...register("username")}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          {...register("Password")}
-        />
+        <div className="floating-label">
+          <input
+            placeholder="Email"
+            type="text"
+            name="email"
+            id="email"
+            {...register("email")}
+          />
+          <label htmlFor="email">Email:</label>
+        </div>
+
+        <div className="floating-label">
+          <input
+            placeholder="Password"
+            type="password"
+            name="password"
+            id="password"
+            {...register("password")}
+          />
+          <label htmlFor="email">Password:</label>
+        </div>
         <button type="submit">Sign In</button>
         <Link to="signup">Need an account? Click here to sign up.</Link>
-      </form>
-    </>
+      </StyledForm>
+    </Modal>
   );
 }

@@ -35,11 +35,6 @@ export const GlobalStyle = createGlobalStyle`
       .desaturate()
       .toHexString()};
     }
-
-
-    .sign-up {
-
-    }
   }
 
   .error {
@@ -47,15 +42,26 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   a {
+    color: ${(props) => props.theme.colors?.secondary};
+    :hover {
+      color:${(props) =>
+        tinycolor(props.theme.colors?.secondary)
+          .darken()
+          .desaturate()
+          .toHexString()};
+    }
+    text-decoration: none;
+  }
+
+  a.nav-link {
     color: ${(props) => props.theme.colors?.primary};
     :hover {
       color:${(props) =>
-    tinycolor(props.theme.colors?.primary)
-      .darken()
-      .desaturate()
-      .toHexString()};
+        tinycolor(props.theme.colors?.primary)
+          .darken()
+          .desaturate()
+          .toHexString()};
     }
-    text-decoration: none;
   }
 `;
 
@@ -82,6 +88,51 @@ export const NavBar = styled.nav`
   }
 `;
 
+export const StyledForm = styled.form`
+  input {
+    width: 100%;
+    font-size: 1.25rem;
+    padding: 1.5rem 0;
+    height: 3.5rem;
+    border: none;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    box-sizing: border-box;
+    transition: all 0.3s linear;
+    color: #000;
+    font-weight: 400;
+    -webkit-appearance: none;
+    &:focus {
+      border-bottom: solid 1px ${({ theme }) => theme.colors.secondary};
+      outline: 0;
+      box-shadow: 0 2px 6px -8px ${({ theme }) => theme.colors.secondary};
+    }
+  }
+  .floating-label {
+    position: relative;
+    margin-bottom: 10px;
+    label {
+      color: ${({ theme }) => theme.colors.secondary};
+      position: absolute;
+      top: calc(50% - 1rem);
+      left: 0;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    input:not(:placeholder-shown) {
+      padding: 28px 0px 12px 0px;
+    }
+    input:not(:placeholder-shown) + label {
+      transform: translateY(-10px);
+      opacity: 0.7;
+    }
+  }
+
+  button {
+    width: 100%;
+  }
+`;
+
 export const MobileNavBar = styled.nav`
   display: flex;
   flex-direction: row;
@@ -95,7 +146,7 @@ export const MobileNavBar = styled.nav`
 `;
 
 export const Box = styled.div`
-  background: rgba(255, 255, 255, 0.1);
+  background: ${(props) => props.background ?? "rgba(255, 255, 255, 0.2)"};
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border-radius: 10px;
@@ -106,12 +157,16 @@ export const Box = styled.div`
 
 export const AppBox = styled(Box)`
   @media only screen and (min-width: 768px) {
-    margin: 1.5rem;
+    margin: 1.25rem;
     padding: 2rem;
+    max-height: 85vh;
   }
 
-  max-height: 85vh;
-  overflow: auto;
+  overflow: ${(props) => (props.scroll ? "auto" : "")};
+
+  > :last-child {
+    margin-bottom: 2rem;
+  }
 
   h1 {
     margin: 0;
@@ -172,7 +227,7 @@ export const AnimatedGradientText = styled.h1`
       : ""};
 
   color: transparent;
-  font-size: 5.5em;
+  font-size: 5em;
   line-height: 0.9;
 
   @keyframes animated-gradient-text {
@@ -188,7 +243,7 @@ export const AnimatedGradientText = styled.h1`
 export const HeroGrid = styled.div`
   display: grid;
   grid-gap: 2rem;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1.5fr;
   height: 100%;
 
   @media only screen and (max-width: 1024px) {

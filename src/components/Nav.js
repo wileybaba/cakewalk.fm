@@ -5,16 +5,24 @@ import { NavBar } from "./StyledComponents";
 export function Nav() {
   return (
     <NavBar>
-      <Link to="/" className="logo">
-        <h3>🥪 lunchbreak.fm</h3>
+      <Link to="/" className="logo nav-link">
+        <h3>🍱{"  "}lunchbreak.fm</h3>
       </Link>
       <div>
-        <Link to="/stream">Stream</Link>
-        <Link to="/mission">Mission</Link>
+        <Link to="/stream" className="nav-link">
+          Stream
+        </Link>
+        <Link to="/mission" className="nav-link">
+          Mission
+        </Link>
       </div>
       <div>
-        <Link to="/sign-in">Log in</Link>
-        <button>Sign up</button>
+        <Link to="/login" className="nav-link">
+          Log in
+        </Link>
+        <Link to="/register">
+          <button>Sign up</button>
+        </Link>
       </div>
     </NavBar>
   );

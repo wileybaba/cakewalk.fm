@@ -46,7 +46,7 @@ export function StationsPage() {
 
   return (
     <Container>
-      <AppBox width="100%">
+      <AppBox width="100%" scroll>
         <Nav />
         <h1>Audius Top 100</h1>
         {isLoading && <span>Loading...</span>}

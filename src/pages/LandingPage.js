@@ -13,9 +13,10 @@ import {
 import { Nav } from "../components/Nav";
 import * as themes from "../themes";
 
-export function LandingPage({ theme, setTheme }) {
+export function LandingPage({ theme, setTheme, children }) {
   return (
     <Container>
+      {children}
       <AppBox width="fit-content">
         <Nav />
         <HeroGrid>
@@ -25,9 +26,7 @@ export function LandingPage({ theme, setTheme }) {
                 <AnimatedGradientText animate>
                   Internet radio
                 </AnimatedGradientText>
-                <AnimatedGradientText>
-                  in the age of cryptocurrency
-                </AnimatedGradientText>
+                <AnimatedGradientText>built for community</AnimatedGradientText>
               </div>
               <h2>
                 Radio is time tested entertainment that is here to stay.
@@ -47,12 +46,10 @@ export function LandingPage({ theme, setTheme }) {
             </Box>
           </SpacerContainer>
           <SpacerContainer flexDirection="column">
-            <img src={HeroImage} style={{ maxWidth: "100%" }} />
-            {/* <ReactAudioPlayer
-                  src="http://kuvo-ice.streamguys.org/kuvohd2-aac-128"
-                  autoPlay
-                  controls
-                /> */}
+            <img
+              src={HeroImage}
+              style={{ maxWidth: "100%", maxHeight: "80%" }}
+            />
             <Box>
               <SpacerContainer>
                 <EmojiButton

@@ -69,7 +69,7 @@ export function TrackBox({ track }) {
   );
 
   return (
-    <BoxGrid>
+    <BoxGrid background="rgba(255, 255, 255, 0.3);">
       <div className="title">
         <h3>{track.title}</h3>
         <Pill>{track.genre}</Pill>
@@ -79,7 +79,7 @@ export function TrackBox({ track }) {
       <img src={track.artwork["150x150"]} />
 
       <div className="audio">
-        <ReactAudioPlayer
+        <audio
           src={streamUrl}
           controls
           preload="none"

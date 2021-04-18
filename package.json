@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "fake-auth": "^0.1.7",
+    "hotkeys-js": "^3.8.3",
     "music-metadata": "^7.8.3",
     "react": "^16.13.1",
     "react-audio-player": "^0.16.1",
