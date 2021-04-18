@@ -162,6 +162,10 @@ export const AppBox = styled(Box)`
     max-height: 85vh;
   }
 
+  @media only screen and (max-width: 768px) {
+    overflow: auto;
+  }
+
   overflow: ${(props) => (props.scroll ? "auto" : "")};
 
   > :last-child {

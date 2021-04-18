@@ -48,7 +48,11 @@ export function LandingPage({ theme, setTheme, children }) {
           <SpacerContainer flexDirection="column">
             <img
               src={HeroImage}
-              style={{ maxWidth: "100%", maxHeight: "80%" }}
+              style={{
+                maxWidth: "100%",
+                maxHeight: "80%",
+                marginBottom: "1.5rem",
+              }}
             />
             <Box>
               <SpacerContainer>
