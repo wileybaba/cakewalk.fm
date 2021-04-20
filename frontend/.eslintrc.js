@@ -18,6 +18,7 @@ module.exports = {
   plugins: ["react"],
   rules: {
     "react/prop-types": 0,
+    "react/no-unescaped-entities": 0,
     quotes: ["error", "double"],
     "object-curly-spacing": ["error", "always"],
     indent: ["error", 2],

@@ -56,3 +56,8 @@ export const springTheme = {
     secondary: "#F7ABFF",
   },
 };
+
+// color palette shared by all themes
+export const palette = {
+  red: "#f5574c",
+};

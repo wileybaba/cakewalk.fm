@@ -1,10 +1,12 @@
+import request, { gql } from "graphql-request";
 import React, { useState } from "react";
-import fakeAuth from "fake-auth";
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
 import { Link, useHistory } from "react-router-dom";
 import { useAuthContext } from "./AuthProvider";
 import { Modal } from "./components/Modal";
 import { StyledForm } from "./components/StyledComponents";
+import { endpoint } from "./services";
 
 export function SignIn() {
   const [error, setError] = useState();
@@ -15,22 +17,26 @@ export function SignIn() {
 
   const { user, setUser } = useAuthContext();
 
-  const handleLogin = (data) => {
-    const { username, password } = data;
-
-    fakeAuth
-      .signin(username, password)
-      .then((response) => {
-        setUser(response.user);
-        if (user?.location && user?.aqi) {
-          history.push("/home");
-        } else {
-          history.push("/preferences");
+  const signInMutation = useMutation(async ({ login, password }) => {
+    const token = await request(
+      endpoint,
+      gql`
+        mutation($username: String!, $email: String!, $password: String!) {
+          signUp(username: $username, email: $email, password: $password) {
+            token
+          }
         }
-      })
-      .catch((error) => {
-        setError(error);
-      });
+      `,
+      {
+        login,
+        password,
+      }
+    );
+    return token;
+  });
+
+  const handleSignIn = (formData) => {
+    signInMutation.mutate(formData);
   };
 
   return (
@@ -38,7 +44,7 @@ export function SignIn() {
       <span style={{ fontSize: "3em" }}>🍱 Its lunchtime.</span>
       <p>Lets get you logged in.</p>
       <StyledForm
-        onSubmit={handleSubmit(handleLogin)}
+        onSubmit={handleSubmit(handleSignIn)}
         style={{ marginBottom: "1.5rem" }}
       >
         {error && <p className="error">{error.message}</p>}

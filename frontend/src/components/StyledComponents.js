@@ -35,10 +35,16 @@ export const GlobalStyle = createGlobalStyle`
       .desaturate()
       .toHexString()};
     }
+
+    &:disabled {
+      background-color: lightgray;
+      cursor: not-allowed;
+    }
   }
 
   .error {
     color: red;
+    margin: 0;
   }
 
   a {
@@ -63,9 +69,19 @@ export const GlobalStyle = createGlobalStyle`
           .toHexString()};
     }
   }
+
+  .mission {
+    p {
+      font-size: 1.365em;
+    }
+  }
 `;
 
-export const Container = styled.div`
+export const PaddingContainer = styled.div`
+  padding: 3rem 5rem;
+`;
+
+export const FlexContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,6 +106,7 @@ export const NavBar = styled.nav`
 
 export const StyledForm = styled.form`
   input {
+    margin: 0 0 0.5rem 0;
     width: 100%;
     font-size: 1.25rem;
     padding: 1.5rem 0;
@@ -110,7 +127,6 @@ export const StyledForm = styled.form`
   }
   .floating-label {
     position: relative;
-    margin-bottom: 10px;
     label {
       color: ${({ theme }) => theme.colors.secondary};
       position: absolute;
@@ -118,6 +134,7 @@ export const StyledForm = styled.form`
       left: 0;
       opacity: 0;
       transition: all 0.3s ease;
+      cursor: text;
     }
     input:not(:placeholder-shown) {
       padding: 28px 0px 12px 0px;
@@ -157,16 +174,17 @@ export const Box = styled.div`
 
 export const AppBox = styled(Box)`
   @media only screen and (min-width: 768px) {
-    margin: 1.25rem;
     padding: 2rem;
+    width: 90%;
     max-height: 85vh;
   }
 
-  @media only screen and (max-width: 768px) {
-    overflow: auto;
-  }
+  overflow: auto;
 
-  overflow: ${(props) => (props.scroll ? "auto" : "")};
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   > :last-child {
     margin-bottom: 2rem;
@@ -249,6 +267,7 @@ export const HeroGrid = styled.div`
   grid-gap: 2rem;
   grid-template-columns: 1fr 1.5fr;
   height: 100%;
+  margin: 0 !important;
 
   @media only screen and (max-width: 1024px) {
     grid-template-rows: 1fr min-content;

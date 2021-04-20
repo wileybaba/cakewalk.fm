@@ -1,5 +1,4 @@
 import React from "react";
-import ReactAudioPlayer from "react-audio-player";
 import { useQuery } from "react-query";
 import { fetchTrackStream } from "../services/audius";
 import { Box } from "./StyledComponents";

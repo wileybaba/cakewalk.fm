@@ -1,6 +1,5 @@
 import React from "react";
 import HeroImage from "url:../assets/images/music_white.svg";
-import { useTheme } from "../hooks/useTheme";
 import {
   Box,
   AppBox,
@@ -8,14 +7,43 @@ import {
   SpacerContainer,
   AnimatedGradientText,
   HeroGrid,
-  Container,
+  FlexContainer,
 } from "../components/StyledComponents";
 import { Nav } from "../components/Nav";
 import * as themes from "../themes";
+import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import request, { gql } from "graphql-request";
+import { endpoint } from "../services";
 
 export function LandingPage({ theme, setTheme, children }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: "onSubmit", reValidateMode: "onChange" });
+
+  const subscribeMutation = useMutation(async ({ email }) => {
+    const subscribedEmail = await request(
+      endpoint,
+      gql`
+        mutation($email: String!) {
+          subscribe(email: $email) {
+            email
+          }
+        }
+      `,
+      { email: email }
+    );
+    return subscribedEmail;
+  });
+
+  const handleSubscribe = (formData) => {
+    subscribeMutation.mutate(formData);
+  };
+
   return (
-    <Container>
+    <FlexContainer>
       {children}
       <AppBox width="fit-content">
         <Nav />
@@ -26,7 +54,9 @@ export function LandingPage({ theme, setTheme, children }) {
                 <AnimatedGradientText animate>
                   Internet radio
                 </AnimatedGradientText>
-                <AnimatedGradientText>built for community</AnimatedGradientText>
+                <AnimatedGradientText>
+                  built for <strong>your</strong> community
+                </AnimatedGradientText>
               </div>
               <h2>
                 Radio is time tested entertainment that is here to stay.
@@ -38,19 +68,54 @@ export function LandingPage({ theme, setTheme, children }) {
                 radio.
               </h2>
             </div>
-            <Box>
-              <div className="input-with-button">
-                <input type="text" placeholder="Enter email address" />
-                <button className="basic">Get early access</button>
-              </div>
-            </Box>
+            {!subscribeMutation.isSuccess && (
+              <Box>
+                <form onSubmit={handleSubmit(handleSubscribe)}>
+                  <div className="input-with-button">
+                    <input
+                      type="text"
+                      placeholder="Enter email address"
+                      name="email"
+                      {...register("email", {
+                        required: "Please enter your email",
+                        pattern: {
+                          value: /(.+)@(.+){2,}\.(.+){2,}/,
+                          message: "Please enter a valid email",
+                        },
+                      })}
+                    />
+                    <button className="basic">
+                      {subscribeMutation.isLoading
+                        ? "Loading..."
+                        : "Get early access"}
+                    </button>
+                  </div>
+                </form>
+                {subscribeMutation.isError &&
+                  subscribeMutation.error.response.errors.map((err) => (
+                    <p key={new Date().getTime()} className="error">
+                      {err.message}
+                    </p>
+                  ))}
+                {errors.email && (
+                  <p className="error">{errors.email.message}</p>
+                )}
+              </Box>
+            )}
+            {subscribeMutation.isSuccess && (
+              <Box>
+                <h3>
+                  Thank you for your interest in our community. We are working
+                  hard to build a product that you're going to love—talk soon.
+                </h3>
+              </Box>
+            )}
           </SpacerContainer>
           <SpacerContainer flexDirection="column">
             <img
               src={HeroImage}
               style={{
-                maxWidth: "100%",
-                maxHeight: "80%",
+                maxWidth: "95%",
                 marginBottom: "1.5rem",
               }}
             />
@@ -91,6 +156,6 @@ export function LandingPage({ theme, setTheme, children }) {
           </SpacerContainer>
         </HeroGrid>
       </AppBox>
-    </Container>
+    </FlexContainer>
   );
 }

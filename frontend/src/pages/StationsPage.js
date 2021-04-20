@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
-import { AppBox, Container } from "../components/StyledComponents";
+import {
+  AppBox,
+  FlexContainer,
+  PaddingContainer,
+} from "../components/StyledComponents";
 import { Nav } from "../components/Nav";
 import { fetchTrendingTracks } from "../services/audius";
 import { useQuery } from "react-query";
@@ -45,9 +49,9 @@ export function StationsPage() {
   }, []);
 
   return (
-    <Container>
-      <AppBox width="100%" scroll>
-        <Nav />
+    <PaddingContainer>
+      <Nav />
+      <div style={{ overflow: "auto" }}>
         <h1>Audius Top 100</h1>
         {isLoading && <span>Loading...</span>}
         {isError && <span>Error: {error.message}</span>}
@@ -55,8 +59,8 @@ export function StationsPage() {
           {trendingTracks?.data.slice(0, 25).map((track) => {
             return <TrackBox key={track.id} track={track} />;
           })}
-        </TrackGrid>
-      </AppBox>
-    </Container>
+        </TrackGrid>{" "}
+      </div>
+    </PaddingContainer>
   );
 }

@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { useHotkeys } from "../hooks/useHotkeys";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
+import { GoX } from "react-icons/go";
+import { palette } from "../themes";
 
 const Overlay = styled.div`
   z-index: 10;
@@ -11,10 +13,6 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   background: rgb(58, 72, 97, 0.7);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const Container = styled.div`
@@ -22,17 +20,34 @@ const Container = styled.div`
   background: white;
   border: none;
   border-radius: 6px;
-  flex-shrink: 0;
-  position: fixed;
   z-index: 100;
-  width: auto;
   height: fit-content;
   color: #2c3e50;
   box-shadow: 0px 6px 6px 0px 0, 0, 0, 0.75;
 
-  @media (min-width: 760px) {
-    width: 20rem;
-    height: 35rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  @media (max-width: 796px) {
+    height: 90%;
+    width: 90%;
+    text-align: center;
+  }
+
+  .close-x {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 0.5rem;
+    font-size: 1.5em;
+    transition: ease 0.5s all;
+    cursor: pointer;
+
+    &:hover {
+      color: ${palette.red};
+    }
   }
 `;
 
@@ -41,14 +56,17 @@ export function Modal({ show = true, cleanup, children }) {
 
   const modalRef = useRef(null);
 
-  useOnClickOutside(modalRef, () => {
+  const handleClose = () => {
     setVisible(false);
     cleanup();
+  };
+
+  useOnClickOutside(modalRef, () => {
+    handleClose();
   });
 
   useHotkeys("esc", () => {
-    setVisible(false);
-    cleanup();
+    handleClose();
   });
 
   if (!visible) return <div />;
@@ -56,7 +74,10 @@ export function Modal({ show = true, cleanup, children }) {
   return (
     <>
       <Overlay />
-      <Container ref={modalRef}>{children}</Container>
+      <Container ref={modalRef}>
+        <GoX className="close-x" onClick={handleClose} />
+        {children}
+      </Container>
     </>
   );
 }

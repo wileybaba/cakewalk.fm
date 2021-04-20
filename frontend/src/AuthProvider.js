@@ -1,5 +1,7 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
-import fakeAuth from "fake-auth";
+import React, { createContext, useState, useContext } from "react";
+import { useQuery } from "react-query";
+import { endpoint } from "./services";
+import request, { gql } from "graphql-request";
 
 const AuthContext = createContext(null);
 
@@ -15,13 +17,23 @@ export const useAuthContext = () => {
 };
 
 export const AuthContextProvider = ({ children }) => {
-  const currentUser = fakeAuth.getCurrentUser().then((user) => user);
+  const { data: currentUser } = useQuery("current-user", async () => {
+    const {
+      posts: { data },
+    } = await request(
+      endpoint,
+      gql`
+        query {
+          me {
+            email
+          }
+        }
+      `
+    );
+    return data;
+  });
 
   const [user, setUser] = useState(currentUser);
-
-  useEffect(() => {
-    fakeAuth.getCurrentUser().then((user) => setUser(user));
-  }, []);
 
   return (
     <AuthContext.Provider value={{ user: user, setUser: setUser }}>
